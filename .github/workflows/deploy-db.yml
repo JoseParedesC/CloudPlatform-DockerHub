@@ -1,0 +1,71 @@
+name: Deploy PostgreSql to Cloud SQL
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'database/**'
+      - '.github/workflows/deploy-db.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud Platform
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup to Cloud Run
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+       # Crear instancia de Cloud SQL si no existe
+      - name: Create Cloud SQL Instance
+        run: |
+          gcloud sql instances create ${{ secrets.DB_INSTANCE }} \
+            --database-version=POSTGRES_15 \
+            --tier=db-f1-micro \
+            --region=${{ secrets.DB_REGION }} \
+            --root-password="${{ secrets.DB_ROOT_PASSWORD }}" || echo "Instance already exists"
+
+      # Crear base de datos
+      - name: Create database
+        run: |
+          gcloud sql databases create my_database \
+            --instance=${{ secrets.DB_INSTANCE }} || echo "Database already exists"
+
+      # Crear usuario
+      - name: Create user
+        run: |
+          gcloud sql users create ${{ secrets.DB_USER }} \
+            --instance=${{ secrets.DB_INSTANCE }} \
+            --password="${{ secrets.DB_PASSWORD }}" || echo "User exists"
+
+      # Subir script y ejecutarlo en Cloud SQL
+          # Instalar el cliente de PostgreSQL y el proxy
+          # Iniciar el proxy en segundo plano
+          # Ejecutar el script SQL
+          # Detener el proxy
+      - name: Run init SQL
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_CATALOG }}
+          INSTANCE_CONNECTION_NAME: ${{ secrets.GCP_PROJECT_ID }}:${{ secrets.DB_REGION }}:${{ secrets.DB_INSTANCE }} # formato: project:region:instance
+        run: |
+          sudo apt-get update && sudo apt-get install -y wget postgresql-client
+          wget https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.11.0/cloud-sql-proxy.linux.amd64 -O cloud-sql-proxy
+          chmod +x cloud-sql-proxy
+
+          ./cloud-sql-proxy $INSTANCE_CONNECTION_NAME --address 127.0.0.1 --port 5432 &
+          sleep 5
+
+          PGPASSWORD=$DB_PASS psql -h 127.0.0.1 -U $DB_USER -d $DB_NAME -f database/init.sql
+
+          kill %1
+
+

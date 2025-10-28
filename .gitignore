@@ -1,0 +1,60 @@
+# ===============================
+# Archivos del sistema y editor
+# ===============================
+.vscode/
+obsolet mystical-nimbus-357317-da81410b4d53.json
+mystical-nimbus-357317-da81410b4d53.json
+mystical-nimbus-357317-d3a771319ff4.json
+mystical-nimbus-357317-d3a771319ff4.json
+obsolete 2mystical-nimbus-357317-d3a771319ff4.json
+plucky-spirit-337201-8464d75addde.json
+
+# ===============================
+# Archivos de dependencias
+# ===============================
+node_modules/
+packages/
+dist/
+build/
+out/
+
+# ===============================
+# Archivos de entorno / credenciales
+# ===============================
+.env
+
+# ===============================
+# Docker
+# ===============================
+# Archivos generados automáticamente
+
+
+# Imágenes o archivos temporales locales
+
+
+# ===============================
+# Sistemas operativos
+# ===============================
+# macOS
+
+# Windows
+
+
+# Linux
+
+
+# ===============================
+# Compilados / binarios (si usas .NET, Go o Python)
+# ===============================
+
+
+# ===============================
+# GitHub Actions y CI/CD
+# ===============================
+# Logs o temporales de ejecución local
+
+
+# ===============================
+# Otros
+# ===============================
+

@@ -5,6 +5,9 @@ on:
     workflows: ["Build and Push Docker Image Backend"]
     types:
       - completed
+  push:
+    paths:
+      - '.github/deploy-cloudrun-backend.yml'
 
 jobs:
   deploy:

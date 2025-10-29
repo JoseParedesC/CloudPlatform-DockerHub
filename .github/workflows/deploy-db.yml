@@ -35,7 +35,7 @@ jobs:
       # Crear base de datos
       - name: Create database
         run: |
-          gcloud sql databases create my_database \
+          gcloud sql databases create ${{ secrets.DB_CATALOG }} \
             --instance=${{ secrets.DB_INSTANCE }} || echo "Database already exists"
 
       # Crear usuario

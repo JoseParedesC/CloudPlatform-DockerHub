@@ -33,8 +33,8 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            eldioni/docker-frontend:1.2
-            eldioni/docker-frontend:${{ github.sha }}
+            eldioni/node_frontend:1.2
+            eldioni/node_frontend:${{ github.sha }}
 
       # - name: Pull official PostgreSQL image
       #   run: docker pull postgres:15

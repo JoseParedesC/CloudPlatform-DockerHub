@@ -25,8 +25,8 @@ jobs:
       - name: Deploy backend
         run: |
           gcloud run deploy backend-service \
-            --image=docker.io/eldioni/docker-backend:${{ github.sha }} \
-            --region=${{ secrets.DB_INSTANCE }} \
+            --image=docker.io/eldioni/node_backend:${{ github.sha }} \
+            --region=${{ secrets.DB_REGION }} \
             --platform=managed \
             --allow-unauthenticated \
             --add-cloudsql-instances=${{ secrets.GCP_PROJECT_ID }}:${{ secrets.DB_REGION }}:${{ secrets.DB_INSTANCE }} \

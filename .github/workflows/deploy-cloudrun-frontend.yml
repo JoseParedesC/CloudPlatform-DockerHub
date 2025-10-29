@@ -37,6 +37,6 @@ jobs:
         with:
           service: frontend-service
           region: us-central1
-          image: docker.io/eldioni/docker-frontend:${{ github.sha }}
+          image: docker.io/eldioni/node_frontend:${{ github.sha }}
           # image: docker.io/eldioni/docker-frontend:
           

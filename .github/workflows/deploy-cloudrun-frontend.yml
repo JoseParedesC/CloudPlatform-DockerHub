@@ -42,7 +42,7 @@ jobs:
 
       - name: Make frontend public
         run: |
-          gcloud run services add-iam-policy-binding node_frontend \
+          gcloud run services add-iam-policy-binding frontend-service \
             --region=${{ secrets.DB_REGION }} \
             --member="allUsers" \
             --role="roles/run.invoker"

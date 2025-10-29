@@ -24,7 +24,7 @@ function App() {
       .then(setData)
       .catch(setError);
 
-    fetch(`${API_URL}/api/ventas/ventas_details?codigo_factura=FAC-001`) // Nginx redirige al backend
+    fetch(`${API_URL}/api/ventas/ventas_details/FAC-001`) // Nginx redirige al backend
       .then(res => res.json())
       .then(setDataD)
       .catch(setError);

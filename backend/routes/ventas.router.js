@@ -17,8 +17,9 @@ router.get("/ventas_details", async (req, res) => {
 });
 
 
-router.get("/ventas_details", async (req, res) => {
-  const { codigo_factura } = req.query;
+router.get("/ventas_details/:codigo_factura", async (req, res) => {
+  // const { codigo_factura } = req.query;
+  const { codigo_factura } = req.params;
   const ventas = await service.findDetailByFactura(codigo_factura);
 
   res.json({ message: ventas.message, rows: ventas.rows})

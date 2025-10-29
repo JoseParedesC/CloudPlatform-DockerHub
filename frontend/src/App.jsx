@@ -4,7 +4,7 @@ function App() {
   const API_URL = import.meta.env.VITE_APP_API_URL
   const [prueba, setDataP] = useState(null);
   const [data, setData] = useState(null);
-  const [ventasD, setDataD] = useState(null);
+  const [codigo_factura, setCodigoFactura] = useState(null);
   const [ventas, setVentas] = useState(null);
   const [error, setError] = useState(null);
 
@@ -23,12 +23,24 @@ function App() {
       .then(res => res.json())
       .then(setData)
       .catch(setError);
-
-    fetch(`${API_URL}/api/ventas/ventas_details/FAC-001`) // Nginx redirige al backend
-      .then(res => res.json())
-      .then(setDataD)
-      .catch(setError);
   }, []);
+
+  const buscarFactura = async () => {
+
+    if(!codigo_factura.trim())
+      alert("Ingrese un codigo de Factura valido");
+
+    try {
+      fetch(`${API_URL}/api/ventas/ventas_details/${codigo_factura}`) // Nginx redirige al backend
+        .then(res => res.json())
+        .then(setCodigoFactura)
+        .catch(setError);
+
+    } catch (err) {
+      console.log(err.toString());
+    }
+
+  }
 
   return (
     <div style={{ padding: "2rem" }}>
@@ -40,7 +52,18 @@ function App() {
       <hr></hr>
       <pre>{JSON.stringify(data, "No hay conexion a la base de datos", 2)}</pre>
       <hr></hr>
-      <pre>{JSON.stringify(ventasD, "No hay conexion a la base de datos", 2)}</pre>
+      <div>
+        <label>
+          Código de factura:{" "}
+          <input
+            type="text"
+            value={codigoFactura}
+            onChange={(e) => setCodigoFactura(e.target.value)}
+            placeholder="Ej: FAC-001"
+          />
+        </label>
+        <button onClick={buscarFactura}>Buscar</button>
+      </div>
       <hr />
       <pre>{JSON.stringify(ventas, "No hay conexion a la base de datos", 2)}</pre>
       <p>Errores:</p>

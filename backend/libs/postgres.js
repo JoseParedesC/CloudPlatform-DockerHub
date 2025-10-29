@@ -14,7 +14,7 @@ const pool = new Pool({
     database: DB_CATALOG,
     user: DB_USER,
     password: DB_PASSWORD,
-    port: DB_PORT,
+    port: DB_PORT
 });
 
 // module.exports = pool;

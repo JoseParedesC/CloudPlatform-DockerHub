@@ -10,7 +10,7 @@ const {
 } = process.env;
 
 const pool = new Pool({
-    host: `/cloudsql/${INSTANCE_CONNECTION_NAME}`, // nombre del servicio en docker-compose // ID_proyecto:REGION:INSTANCIA
+    host: `/cloudsql/${GCP_PROJECT_ID}:${DB_REGION}:${DB_INSTANCE}`, // nombre del servicio en docker-compose // ID_proyecto:REGION:INSTANCIA
     database: DB_CATALOG,
     user: DB_USER,
     password: DB_PASSWORD,

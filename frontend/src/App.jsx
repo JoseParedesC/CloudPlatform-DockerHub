@@ -5,6 +5,7 @@ function App() {
   const [prueba, setDataP] = useState(null);
   const [data, setData] = useState(null);
   const [codigoFactura, setCodigoFactura] = useState(null);
+  const [dataFactura, setDataFactura] = useState(null);
   const [ventas, setVentas] = useState(null);
   const [error, setError] = useState(null);
 
@@ -33,7 +34,7 @@ function App() {
     try {
       fetch(`${API_URL}/api/ventas/ventas_details/${codigoFactura}`) // Nginx redirige al backend
         .then(res => res.json())
-        .then(setCodigoFactura)
+        .then(setDataFactura)
         .catch(setError);
 
     } catch (err) {
@@ -63,6 +64,7 @@ function App() {
           />
         </label>
         <button onClick={buscarFactura}>Buscar</button>
+        <pre>{JSON.stringify(dataFactura, "No hay conexion a la base de datos", 2)}</pre>
       </div>
       <hr />
       <pre>{JSON.stringify(ventas, "No hay conexion a la base de datos", 2)}</pre>

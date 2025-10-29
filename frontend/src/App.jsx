@@ -4,7 +4,7 @@ function App() {
   const API_URL = import.meta.env.VITE_APP_API_URL
   const [prueba, setDataP] = useState(null);
   const [data, setData] = useState(null);
-  const [codigo_factura, setCodigoFactura] = useState(null);
+  const [codigoFactura, setCodigoFactura] = useState(null);
   const [ventas, setVentas] = useState(null);
   const [error, setError] = useState(null);
 
@@ -27,11 +27,11 @@ function App() {
 
   const buscarFactura = async () => {
 
-    if(!codigo_factura.trim())
+    if(!codigoFactura.trim())
       alert("Ingrese un codigo de Factura valido");
 
     try {
-      fetch(`${API_URL}/api/ventas/ventas_details/${codigo_factura}`) // Nginx redirige al backend
+      fetch(`${API_URL}/api/ventas/ventas_details/${codigoFactura}`) // Nginx redirige al backend
         .then(res => res.json())
         .then(setCodigoFactura)
         .catch(setError);

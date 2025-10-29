@@ -13,7 +13,7 @@ export default class ProductsService {
             return ({ message: "Productos", rows: result.rows });
         } catch (err) {
             console.error(err);
-            return ({ message: err });
+            return ({ message: err || "Blank message" });
         }
     }
 

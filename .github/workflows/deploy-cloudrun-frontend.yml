@@ -36,7 +36,14 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: frontend-service
-          region: us-central1
+          region: ${{ secrets.DB_REGION }}
           image: docker.io/eldioni/node_frontend:${{ github.sha }}
           # image: docker.io/eldioni/docker-frontend:
+
+      - name: Make frontend public
+        run: |
+          gcloud run services add-iam-policy-binding node_frontend \
+            --region=${{ secrets.DB_REGION }} \
+            --member="allUsers" \
+            --role="roles/run.invoker"
           

@@ -6,6 +6,7 @@ on:
     types:
       - completed
   push:
+    branches: [ main ]
     paths:
       - '.github/deploy-cloudrun-backend.yml'
 

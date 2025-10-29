@@ -8,7 +8,7 @@ export default class ProductsService {
             return ({ message: "Productos", rows: result.rows });
         } catch (err) {
             console.error(err);
-            return ({ message: "Error message" });
+            return ({ message: err.toString() });
         }
     }
 

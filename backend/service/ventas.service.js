@@ -66,7 +66,7 @@ export default class ServiceVentas{
             return ({ message : "Consulta Factura por Codigo", data, metadata});
         }catch(err){
             console.log(err)
-            return ({ messagge: err });
+            return ({ message: err });
         }
     }
 

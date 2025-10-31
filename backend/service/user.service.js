@@ -8,8 +8,12 @@ class UserService {
     }
 
     async findAll(){
-        const resp = await models.User.findAll();
-        return resp;
+        try{
+            const resp = await models.User.findAll();
+            return ({ message: "Consulta Usuarios", rows: resp.rows });
+        }catch(err){
+            return ({ message: err })
+        }
     }
 }
 

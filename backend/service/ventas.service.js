@@ -61,7 +61,7 @@ export default class ServiceVentas{
 
     async findFacturasByCode(codigo_factura="FAC-001"){
         try{
-            const query = `SELECT * FROM ventas WHERE ventas.codigo_factura = '${codigo_factura}'`
+            const query = `SELECT * FROM ventas WHERE ventas.codigo_factura = '${codigo_factura}'` 
             const [data, metadata] = await sequelize.query(query);
             return ({ message : "Consulta Factura por Codigo", data, metadata});
         }catch(err){

@@ -1,21 +1,12 @@
 import { Pool } from 'pg';
-// import dbConfig from '../libs/configdb.js'
-
-const {
-    DB_HOST,
-    DB_USER,
-    DB_CATALOG,
-    DB_PASSWORD,
-    DB_PORT,
-    DB_DIALECT
-} = process.env;
+import dbConfig from '../libs/configdb.js'
 
 const pool = new Pool({
-    host: DB_HOST, // nombre del servicio en docker-compose // ID_proyecto:REGION:INSTANCIA
-    database: DB_CATALOG,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    port: DB_PORT
+    host: dbConfig.host, // nombre del servicio en docker-compose // ID_proyecto:REGION:INSTANCIA
+    database: dbConfig.database,
+    user: dbConfig.username,
+    password: dbConfig.pass,
+    port: dbConfig.port
 });
 
 // module.exports = pool;

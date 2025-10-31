@@ -4,7 +4,7 @@ import dbConfig from '../libs/configdb.js'
 const sequelize = new Sequelize(
   dbConfig.database,
   dbConfig.username,
-  dbConfig.password,
+  dbConfig.pass,
   {
     host: dbConfig.host,
     port: dbConfig.port,

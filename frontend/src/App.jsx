@@ -75,7 +75,7 @@ function App() {
       <hr></hr>
       <div>
         <label>
-          Código de factura:{" "}
+          Código de factura - Pool:{" "}
           <input
             type="text"
             value={codigoFactura}
@@ -89,7 +89,7 @@ function App() {
       <hr />
       <div>
         <label>
-          Código de factura:{" "}
+          Código de factura - Sequelize:{" "}
           <input
             type="text"
             value={codigoFacturaI}

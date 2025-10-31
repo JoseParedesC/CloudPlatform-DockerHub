@@ -12,7 +12,7 @@ class UserService {
             const resp = await models.user.findAll();
             return ({ message: "Consulta Usuarios", rows: resp.rows });
         }catch(err){
-            return ({ message: err })
+            return ({ message: "Error consulta" })
         }
     }
 }

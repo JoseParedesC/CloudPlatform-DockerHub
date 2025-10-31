@@ -5,6 +5,10 @@ on:
     workflows: ["Build and Push Docker Image Backend"]
     types:
       - completed
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/deploy-cloudrun-backend.yml'
 
 jobs:
   deploy:
@@ -25,12 +29,17 @@ jobs:
       - name: Deploy backend
         run: |
           gcloud run deploy backend-service \
-            --image=docker.io/eldioni/docker-backend:${{ github.sha }} \
-            --region=${{ secrets.DB_INSTANCE }} \
+            --image=docker.io/eldioni/node_backend:${{ github.sha }} \
+            --region=${{ secrets.DB_REGION }} \
             --platform=managed \
             --allow-unauthenticated \
             --add-cloudsql-instances=${{ secrets.GCP_PROJECT_ID }}:${{ secrets.DB_REGION }}:${{ secrets.DB_INSTANCE }} \
-            --set-env-vars=DB_HOST=/cloudsql/${{ secrets.GCP_PROJECT_ID }}:${{ secrets.DB_REGION }}:${{ secrets.DB_INSTANCE }},DB_USER=${{ secrets.DB_USER }},DB_PASS=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_CATALOG }}
+            --set-env-vars="
+              DB_HOST=/cloudsql/${{ secrets.GCP_PROJECT_ID }}:${{ secrets.DB_REGION }}:${{ secrets.DB_INSTANCE }},
+              DB_USER=${{ secrets.DB_USER }},
+              DB_PASSWORD=${{ secrets.DB_PASSWORD }},
+              DB_CATALOG=${{ secrets.DB_CATALOG }}, 
+              DB_PORT=${{ secrets.DB_PORT }}"
 
       # - name: Deploy frontend
       #   uses: google-github-actions/deploy-cloudrun@v2

@@ -35,7 +35,7 @@ jobs:
       # Crear base de datos
       - name: Create database
         run: |
-          gcloud sql databases create my_database \
+          gcloud sql databases create ${{ secrets.DB_CATALOG }} \
             --instance=${{ secrets.DB_INSTANCE }} || echo "Database already exists"
 
       # Crear usuario
@@ -53,18 +53,19 @@ jobs:
       - name: Run init SQL
         env:
           DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_CATALOG }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_CATALOG: ${{ secrets.DB_CATALOG }}
+          DB_PORT: ${{ secrets.DB_PORT }}
           INSTANCE_CONNECTION_NAME: ${{ secrets.GCP_PROJECT_ID }}:${{ secrets.DB_REGION }}:${{ secrets.DB_INSTANCE }} # formato: project:region:instance
         run: |
           sudo apt-get update && sudo apt-get install -y wget postgresql-client
           wget https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.11.0/cloud-sql-proxy.linux.amd64 -O cloud-sql-proxy
           chmod +x cloud-sql-proxy
 
-          ./cloud-sql-proxy $INSTANCE_CONNECTION_NAME --address 127.0.0.1 --port 5432 &
+          ./cloud-sql-proxy $INSTANCE_CONNECTION_NAME --address 127.0.0.1 --port $DB_PORT &
           sleep 5
 
-          PGPASSWORD=$DB_PASS psql -h 127.0.0.1 -U $DB_USER -d $DB_NAME -f database/init.sql
+          PGPASSWORD=$DB_PASSWORD psql -h 127.0.0.1 -U $DB_USER -d $DB_CATALOG -f database/init.sql
 
           kill %1
 

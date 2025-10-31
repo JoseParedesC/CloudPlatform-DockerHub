@@ -48,8 +48,8 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            eldioni/docker-backend:1.2
-            eldioni/docker-backend:${{ github.sha }}
+            eldioni/node_backend:1.2
+            eldioni/node_backend:${{ github.sha }}
 
       # - name: Pull official PostgreSQL image
       #   run: docker pull postgres:15

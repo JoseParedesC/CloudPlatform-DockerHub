@@ -5,6 +5,10 @@ on:
     workflows: ["Build and Push Docker Image Frontend"]
     types:
       - completed
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/deploy-cloudrun-frontend.yml'
 
 jobs:
   deploy:
@@ -36,7 +40,14 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: frontend-service
-          region: us-central1
-          image: docker.io/eldioni/docker-frontend:${{ github.sha }}
+          region: ${{ secrets.DB_REGION }}
+          image: docker.io/eldioni/node_frontend:${{ github.sha }}
           # image: docker.io/eldioni/docker-frontend:
+
+      - name: Make frontend public
+        run: |
+          gcloud run services add-iam-policy-binding frontend-service \
+            --region=${{ secrets.DB_REGION }} \
+            --member="allUsers" \
+            --role="roles/run.invoker"
           

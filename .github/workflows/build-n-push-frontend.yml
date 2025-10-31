@@ -6,6 +6,7 @@ on:
     paths:
       - 'frontend/**'
       - '.github/workflows/build-n-push-frontend.yml'
+      - '.github/workflows/deploy-cloudrun-frontend.yml'
   # También puedes agregar tags para versionar imágenes
   # tags:
   #   - 'v*.*.*'

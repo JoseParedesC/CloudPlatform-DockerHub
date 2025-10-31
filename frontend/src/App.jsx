@@ -98,7 +98,7 @@ function App() {
           />
         </label>
         <button onClick={buscarFacturaItems}>Buscar</button>
-        <pre>{JSON.stringify(setDataFacturaI, "No hay conexion a la base de datos", 2)}</pre>
+        <pre>{JSON.stringify(dataFacturaI, "No hay conexion a la base de datos", 2)}</pre>
       </div>
       {/* <pre>{JSON.stringify(ventas, "No hay conexion a la base de datos", 2)}</pre> */}
       <p>Errores:</p>

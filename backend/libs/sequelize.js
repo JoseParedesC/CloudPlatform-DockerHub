@@ -11,7 +11,9 @@ const sequelize = new Sequelize(
     dialect: dbConfig.dialect,
     dialectOptions: {
       // Requerido para Cloud SQL con sockets
-      socketPath: dbConfig.host
+      socketPath: dbConfig.host.startsWith('/cloudsql')
+        ? dbConfig.host
+        : undefined,
     },
     logging: dbConfig.loggin,
   }

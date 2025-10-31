@@ -27,7 +27,7 @@ router.get("/ventas_items/:codigo_factura", async (req, res) => {
   const { codigo_factura } = req.params;
   const ventas = await service.findFacturasByCode(codigo_factura);
 
-  res.json({ message: ventas.message, data: ventas.data, metadata: ventas.metadata})
+  res.json({ message: ventas.message, rows: ventas.metadata?.rows})
 });
 
 // module.exports = router;

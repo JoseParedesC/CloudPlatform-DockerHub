@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import dbConfig from '../libs/configdb.js'
+import setupModels from '../db/models/index.js'
 
 const sequelize = new Sequelize(
   dbConfig.database,
@@ -19,5 +20,8 @@ const sequelize = new Sequelize(
   }
 );
 
+setupModels(sequelize);
+
+sequelize.sync();
 
 export default sequelize;

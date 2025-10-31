@@ -27,7 +27,7 @@ class User extends Model {
 
     static config(conn){
         return{
-            conn,
+            sequelize: conn,
             tableName: USER_TABLE,
             modelName: 'User',
             timestamp: false

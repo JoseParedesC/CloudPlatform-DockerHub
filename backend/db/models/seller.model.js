@@ -27,7 +27,7 @@ class Seller extends Model {
 
     static config(conn){
         return {
-            conn,
+            sequelize: conn,
             tableName: SELLER_TABLE,
             modelName: 'Seller',
             timestamp: false

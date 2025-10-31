@@ -25,9 +25,9 @@ class Client extends Model {
         //models
     }
 
-    static config(conn){
+    static config(sequelize){
         return {
-            conn,
+            sequelize, //El parametro se llama igual que el argumento
             tableName: CLIENT_TABLE,
             modelName: 'client',
             timestamp: false

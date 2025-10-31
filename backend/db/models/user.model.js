@@ -29,10 +29,11 @@ class User extends Model {
         return{
             sequelize: conn,
             tableName: USER_TABLE,
-            modelName: 'user',
+            modelName: 'User',
             timestamp: false
         }
     }
+
 }
 
 export {

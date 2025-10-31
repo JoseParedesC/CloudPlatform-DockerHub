@@ -24,4 +24,5 @@ setupModels(sequelize);
 
 sequelize.sync();
 
+export const models = sequelize.models;
 export default sequelize;

@@ -1,4 +1,5 @@
 import pool from '../libs/postgres.js';
+import sequelize from '../libs/sequelize.js';
 
 export default class ServiceVentas{
 
@@ -56,6 +57,17 @@ export default class ServiceVentas{
             return ({ message: err });
         }
 
+    }
+
+    async findFacturasByCode(codigo_factura="FAC-001"){
+        try{
+            const query = `SELECT * FROM ventas WHERE ventas.codigo_factura = '${codigo_factura}'`
+            const [data, metadata] = await sequelize.query(query);
+            return ({ message : "Consulta Factura por Codigo", data, metadata});
+        }catch(err){
+            console.log(err)
+            return ({ messagge: err });
+        }
     }
 
     

@@ -9,18 +9,21 @@ function App() {
   const [ventas, setVentas] = useState(null);
   const [error, setError] = useState(null);
 
+  const [codigoFacturaI, setCodigoFacturaI] = useState(null);
+  const [dataFacturaI, setDataFacturaI] = useState(null);
+
   useEffect(() => {
     fetch(`${API_URL}/api/prueba`) // Nginx redirige al backend cuando esta configurado el proxy en el nginx.conf /api
       .then(res => res.json())
       .then(setDataP)
       .catch(setError);
 
-    fetch(`${API_URL}/api/products`) // Nginx redirige al backend
-      .then(res => res.json())
-      .then(setVentas)
-      .catch(setError);
-
-     fetch(`${API_URL}/api/ventas/ventas_details`) // Nginx redirige al backend
+    // fetch(`${API_URL}/api/products`) // Nginx redirige al backend
+    //   .then(res => res.json())
+    //   .then(setVentas)
+    //   .catch(setError);
+    
+    fetch(`${API_URL}/api/ventas/ventas_details`) // Nginx redirige al backend
       .then(res => res.json())
       .then(setData)
       .catch(setError);
@@ -35,6 +38,23 @@ function App() {
       fetch(`${API_URL}/api/ventas/ventas_details/${codigoFactura}`) // Nginx redirige al backend
         .then(res => res.json())
         .then(setDataFactura)
+        .catch(setError);
+
+    } catch (err) {
+      console.log(err.toString());
+    }
+
+  }
+
+  const buscarFacturaItems = async () => {
+
+    if(!codigoFacturaI.trim())
+      alert("Ingrese un codigo de Factura valido");
+
+    try {
+      fetch(`${API_URL}/api/ventas/ventas_items/${codigoFacturaI}`) // Nginx redirige al backend
+        .then(res => res.json())
+        .then(setDataFacturaI)
         .catch(setError);
 
     } catch (err) {
@@ -67,7 +87,20 @@ function App() {
         <pre>{JSON.stringify(dataFactura, "No hay conexion a la base de datos", 2)}</pre>
       </div>
       <hr />
-      <pre>{JSON.stringify(ventas, "No hay conexion a la base de datos", 2)}</pre>
+      <div>
+        <label>
+          Código de factura:{" "}
+          <input
+            type="text"
+            value={codigoFacturaI}
+            onChange={(e) => setCodigoFacturaI(e.target.value)}
+            placeholder="Ej: FAC-001"
+          />
+        </label>
+        <button onClick={buscarFacturaItems}>Buscar</button>
+        <pre>{JSON.stringify(setDataFacturaI, "No hay conexion a la base de datos", 2)}</pre>
+      </div>
+      {/* <pre>{JSON.stringify(ventas, "No hay conexion a la base de datos", 2)}</pre> */}
       <p>Errores:</p>
       <pre>{JSON.stringify(error, "No hay conexion a la base de datos", 2)}</pre>
     </div>

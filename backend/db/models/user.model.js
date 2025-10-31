@@ -4,12 +4,16 @@ const USER_TABLE = 'users';
 
 const UserSchema = {
     id: {
-        allowNull : false,
-        autoIncrement: true,
+        allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         type: DataTypes.INTEGER
     },
     nombre: {
+        allowNull: false,
+        type: DataTypes.STRING
+    },
+    suerlogin: {
         allowNull: false,
         type: DataTypes.STRING
     }
@@ -17,7 +21,6 @@ const UserSchema = {
 
 
 class User extends Model {
-
     static associate(){
         //models
     }
@@ -30,11 +33,9 @@ class User extends Model {
             timestamp: false
         }
     }
-
 }
 
 export {
-    USER_TABLE,
     UserSchema,
     User
 }

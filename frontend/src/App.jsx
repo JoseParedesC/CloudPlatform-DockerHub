@@ -4,13 +4,20 @@ function App() {
   const API_URL = import.meta.env.VITE_APP_API_URL
   const [prueba, setDataP] = useState(null);
   const [data, setData] = useState(null);
-  const [codigoFactura, setCodigoFactura] = useState(null);
-  const [dataFactura, setDataFactura] = useState(null);
   const [ventas, setVentas] = useState(null);
   const [error, setError] = useState(null);
 
+  //Facturas
+  const [codigoFactura, setCodigoFactura] = useState(null);
+  const [dataFactura, setDataFactura] = useState(null);
+
+  //Facturas Items
   const [codigoFacturaI, setCodigoFacturaI] = useState(null);
   const [dataFacturaI, setDataFacturaI] = useState(null);
+
+  //Usuarios
+  // const [idUsuario, setIdiUsuario] = useState(null);
+  const [dataUsusario, setDataUsuario] = useState(null);
 
   useEffect(() => {
     fetch(`${API_URL}/api/prueba`) // Nginx redirige al backend cuando esta configurado el proxy en el nginx.conf /api
@@ -29,8 +36,8 @@ function App() {
       .catch(setError);
   }, []);
 
+  //Facturas
   const buscarFactura = async () => {
-
     if(!codigoFactura.trim())
       alert("Ingrese un codigo de Factura valido");
 
@@ -43,11 +50,17 @@ function App() {
     } catch (err) {
       console.log(err.toString());
     }
-
   }
 
-  const buscarFacturaItems = async () => {
+  const limpiarFactura = () => {
+    setDataFactura('');
+    setCodigoFactura('');
+  }
 
+
+
+  //Facturas Items
+  const buscarFacturaItems = async () => {
     if(!codigoFacturaI.trim())
       alert("Ingrese un codigo de Factura valido");
 
@@ -60,7 +73,30 @@ function App() {
     } catch (err) {
       console.log(err.toString());
     }
+  }
 
+  const limpiarFacturaItems = () => {
+    setDataFacturaI('');
+    setCodigoFacturaI('');
+  }
+
+
+
+  //Usuarios
+  const buscarUsuarios = async () => {
+    try {
+      fetch(`${API_URL}/api/users/find`)
+        .then(res => res.json())
+        .then(setDataUsuario)
+        .catch(setError);
+
+    } catch (err) {
+      console.log(err.toString());
+    }
+  }
+
+  const limpiarUsuarios = () => {
+    setDataUsuario('');
   }
 
   return (
@@ -71,7 +107,7 @@ function App() {
       <hr />
       <a href="https://backend-service-959958084950.us-central1.run.app/api/prueba">{API_URL}/api/prueba</a>
       <hr></hr>
-      <pre>{JSON.stringify(data, "No hay conexion a la base de datos", 2)}</pre>
+      {/* <pre>{JSON.stringify(data, "No hay conexion a la base de datos", 2)}</pre> */}
       <hr></hr>
       <div>
         <label>
@@ -83,7 +119,8 @@ function App() {
             placeholder="Ej: FAC-001"
           />
         </label>
-        <button onClick={buscarFactura}>Buscar</button>
+        <button onClick={buscarFactura}>Search</button>
+        <button onClick={limpiarFactura}>Clear</button>
         <pre>{JSON.stringify(dataFactura, "No hay conexion a la base de datos", 2)}</pre>
       </div>
       <hr />
@@ -97,8 +134,24 @@ function App() {
             placeholder="Ej: FAC-001"
           />
         </label>
-        <button onClick={buscarFacturaItems}>Buscar</button>
+        <button onClick={buscarFacturaItems}>Search</button>
+        <button onClick={limpiarFacturaItems}>Clear</button>
         <pre>{JSON.stringify(dataFacturaI, "No hay conexion a la base de datos", 2)}</pre>
+      </div>
+      <hr />
+      <div>
+        <label>
+          Usuarios - Sequelize:{" "}
+          {/* <input
+            type="text"
+            value={idUsuario}
+            onChange={(e) => setIdiUsuario(e.target.value)}
+            placeholder="Ej: FAC-001"
+          /> */}
+        </label>
+        <button onClick={buscarUsuarios}>Search</button>
+        <button onClick={limpiarUsuarios}>Clear</button>
+        <pre>{JSON.stringify(dataUsusario, "No hay conexion a la base de datos", 2)}</pre>
       </div>
       {/* <pre>{JSON.stringify(ventas, "No hay conexion a la base de datos", 2)}</pre> */}
       <p>Errores:</p>

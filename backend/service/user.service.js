@@ -12,7 +12,7 @@ class UserService {
             const resp = await models.User.findAll();
             return ({ message: "Consulta Usuarios", rows: resp.rows });
         }catch(err){
-            return ({ message: err.toString() });
+            return ({ message: Object.keys(models).toString() });
         }
     }
 }

@@ -21,13 +21,13 @@ const UserSchema = {
 
 
 class User extends Model {
-    static associate(){
+    static associate(models){
         //models
     }
 
-    static config(conn){
+    static config(sequelize){
         return{
-            sequelize: conn,
+            sequelize,
             tableName: USER_TABLE,
             modelName: 'User',
             timestamp: false
@@ -37,6 +37,7 @@ class User extends Model {
 }
 
 export {
+    USER_TABLE,
     UserSchema,
     User
 }

@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from "express";
 import cors from "cors";
 import routerApi from './routes/index.js';
+import middlwwareHandler from './middlewares/errror.handler.js'
 
 const port = process.env.PORT || 8080
 const app = express();
@@ -24,7 +25,6 @@ app.use(
 
 app.use(express.json());
 
-
 // Ruta de prueba
 app.get("/api/prueba", async (req, res) => {
   res.json({ message: "Conexión exitosa a Backend" });
@@ -32,6 +32,11 @@ app.get("/api/prueba", async (req, res) => {
 });
 
 routerApi(app);
+
+app.use(middlwwareHandler.logErrors)
+app.use(middlwwareHandler.handleNotFoundError)
+app.use(middlwwareHandler.handleValidationError)
+
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`🚀 Backend corriendo en http://0.0.0.0:${port} 🤔`);

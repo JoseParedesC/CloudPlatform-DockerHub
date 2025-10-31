@@ -17,7 +17,6 @@ router.get("/ventas_details", async (req, res) => {
 });
 
 router.get("/ventas_details/:codigo_factura", async (req, res) => {
-  // const { codigo_factura } = req.query;
   const { codigo_factura } = req.params;
   const ventas = await service.findDetailByFactura(codigo_factura);
 
@@ -25,11 +24,10 @@ router.get("/ventas_details/:codigo_factura", async (req, res) => {
 });
 
 router.get("/ventas_items/:codigo_factura", async (req, res) => {
-  // const { codigo_factura } = req.query;
   const { codigo_factura } = req.params;
   const ventas = await service.findFacturasByCode(codigo_factura);
 
-  res.json({ message: ventas.message, rows: ventas.rows})
+  res.json({ message: ventas.message, data: ventas.data, metadata: ventas.metadata})
 });
 
 // module.exports = router;
